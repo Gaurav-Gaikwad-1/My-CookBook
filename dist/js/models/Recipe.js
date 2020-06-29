@@ -22,8 +22,8 @@ export default class Recipe {
     calcTime(){                                                      //to display cooking time
         // assuming that we need 15 min for each 3 ingredients
         const numOfIng = this.ingredients.length;      //here ingredients is array
-        const periods = numOfIng / 3;
-        this.time = periods;
+        const periods = Math.ceil(numOfIng / 3);
+        this.time = periods*15;
     }
 
     calcServing(){
@@ -81,11 +81,22 @@ export default class Recipe {
                 objIng = {
                     count:1,
                     unit: '',
-                    ingredient: arrIng.slice(1).join(' ')
-                };
+                    ingredient
+                }
             }
             return objIng;
         });
         this.ingredients = newIngredients;
+    }
+
+    updateServings(type){
+        //Servings
+        const newServings = type === 'dec' ? this.servings-1 : this.servings+1 ;
+
+        //ingredients
+        this.ingredients.forEach(ing =>{
+            ing.count *= (newServings / this.servings);
+        });
+        this.servings=newServings;
     }
 }         

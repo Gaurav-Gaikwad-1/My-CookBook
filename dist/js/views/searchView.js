@@ -1,23 +1,23 @@
 import { elements } from './base';
 
-export const getInput= () => elements.searchInput.value;
+export const getInput = () => elements.searchInput.value;
 
 export const clearInput= () => {
     elements.searchInput.value="";
-}
+};
 
 export const clearResults = () => {
-    elements.searchResList.innerHTML="";
+    elements.searchResList.innerHTML='';
     elements.searchResPages.innerHTML='';
-}
+};
 
 export const highlightSelected = id => {
     const resultsArr = Array.from(document.querySelectorAll('.results__link'));
     resultsArr.forEach(el => {
         el.classList.remove('results__link--active');
-    })
+    });
 
-    document.querySelector(`a[href*="#${id}"]`).classList.add('results__link--active');
+    document.querySelector(`.results__link[href*="#${id}"]`).classList.add('results__link--active');
 }
 /*  eg title= 'Pasta with Tomato and spinach'
 
@@ -30,7 +30,7 @@ acc: 18 / acc + cur.length = 24 / newTitle = ['Pasta','with','Tomato']
 */
 export const limitRecipeTitle = (title,limit=17) => {
     const newTitle = [];
-    if(title.length > limit){
+    if(title.length > limit) {
         title.split(' ').reduce((acc,cur) =>{                            //The reduce() method executes a reducer function (that you provide) on each element of the array, resulting in single output value.
             if(acc + cur.length <= limit){                                  //it takes 2 param 1)accumulator 2)current value  Your reducer function's returned value is assigned to the accumulator, whose value is remembered across each iteration throughout the array, and ultimately becomes the final, single resulting value.
                 newTitle.push(cur);
