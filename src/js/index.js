@@ -18,7 +18,7 @@ import Likes from '../../dist/js/models/Likes';
  */
 
  const state={}; 
- window.state=state;                                                                //we keep this empty so that when we reload the page the state should be empty
+                                                                //we keep this empty so that when we reload the page the state should be empty
 
  const controlSearch = async()=>{
      //1.Get query from view
@@ -78,7 +78,7 @@ elements.searchResPages.addEventListener('click',e => {
 const controlRecipe = async() => {
     //window.location gives url from which .hash returns hash id;
     const id = window.location.hash.replace('#','');                 //we dont want hash symbol so replaces it with nothing
-    console.log(id);
+    
 
     if(id){
         //prepare UI for changes 
@@ -161,8 +161,8 @@ elements.shopping.addEventListener('click',e=>{
 /**
   * Like Controller
 */
-//testing
-state.likes = new Likes();
+
+
 const controlLike = () => {
     if(!state.likes) state.likes = new Likes();
 
@@ -198,6 +198,22 @@ const controlLike = () => {
     likesView.toggleLikeMenu(state.likes.getNumLikes());
 };
 
+
+
+//Restore liked recipes on page load
+window.addEventListener('load',() => {
+    state.likes = new Likes();
+
+    //restore likes
+    state.likes.readStorage();
+
+    //toggle like menu buttons
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+    //render the existing likes
+    state.likes.likes.forEach(like => likesView.renderLike(like));
+});
+
 //handling recipe button clicks
 elements.recipe.addEventListener('click',e=>{
     if(e.target.matches('.btn-decrease, .btn-decrease *')){
@@ -220,6 +236,5 @@ elements.recipe.addEventListener('click',e=>{
     
 });
 
-window.l = new List();
 
 
